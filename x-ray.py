@@ -13,9 +13,8 @@ def count_words(filepath):
         data = f.read()
         data.replace(",", " ")
         return data.split("\n")
-
-data = count_words('/home/athallah/Downloads/input-xray-e7b8.txt')[:-1]
-f = open("x-ray5.txt","w+")
+input_file = input('input file path: ')
+data = count_words(input_file)[:-1]
 
 def main():
     global data, f
@@ -51,7 +50,6 @@ def main():
             akhir += xkali
         result.append(akhir)
     for o, i in zip(range(1, len(result)+1), result):
-        f.write(f'Case #{o}: {i}\n')
-
+        print(f'Case #{o}: {i}')
 main()
 print(time.time()-start)
