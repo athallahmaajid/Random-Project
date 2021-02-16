@@ -20,11 +20,11 @@ while True:
 		break
 
 def to_binary(string):
-    return "".join([format(ord(char),'#010b')[2:] for char in string])
+    return " ".join([format(ord(char),'#010b')[2:] for char in string])
 def to_string(binaryString):
-    return "".join([chr(int(binaryString[i:i+8],2)) for i in range(0,len(binaryString),8)])
+    return "".join([chr(int(i,2)) for i in binaryString.split()])
 if method == '1':
 	out.write(to_string(text))
 elif method == '2':
-	out.write(to_binary(text))
+	out.write(to_binary('a '))
 out.close()
