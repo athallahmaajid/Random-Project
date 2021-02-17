@@ -26,5 +26,5 @@ def to_string(binaryString):
 if method == '1':
 	out.write(to_string(text))
 elif method == '2':
-	out.write(to_binary('a '))
+	out.write(to_binary(text))
 out.close()
