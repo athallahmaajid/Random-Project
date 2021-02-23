@@ -1,25 +1,28 @@
 import pickle
-def create(todolist):
-    thing = input("What do you want to add? ")
-    todolist.append(thing)
-def display(todolist):
-    print("Your todo list:")
-    for i in range(len(todolist)):
-        print(f"{i+1}. {todolist[i]}")
-def delete(todolist):
-    display(todolist)
-    try:
-        item_pos = int(input("which item number do you want to delete? "))
-        del todolist[item_pos-1]
-        display(todolist)
-    except:
-        print("Invalid number to delete")
+class todolist:
+    def __init__(self, todo):
+        self.todo = todo
+    def create(self):
+        thing = input("What do you want to add? ")
+        self.todo.append(thing)
+    def display(self):
+        print("Your todo list:")
+        for i in range(len(self.todo)):
+            print(f"{i+1}. {self.todo[i]}")
+    def delete(self):
+        self.display()
+        try:
+            item_pos = int(input("which item number do you want to delete? "))
+            del self.todo[item_pos-1]
+            self.display()
+        except:
+            print("Invalid number to delete")
 try:
     f = open("todolist.pickle", 'rb')
-    my_list = pickle.load(f)
+    my_list = todolist(pickle.load(f))
     f.close()
 except:
-    my_list = []
+    my_list = todolist([])
 command = ""
 while command != 'exit':
     command = input('''What Would you like to do?
@@ -29,12 +32,12 @@ while command != 'exit':
                     exit - exit the program
 ''')
     if command == "C":
-        create(my_list)
+        my_list.create()
     elif command == "D":
-        delete(my_list)
+        my_list.delete()
     elif command == "V":
-        display(my_list)
+        my_list.display()
     elif command == "exit":
         f = open("todolist.pickle", "wb")
-        pickle.dump(my_list, f)
+        pickle.dump(my_list.todo, f)
         f.close()
