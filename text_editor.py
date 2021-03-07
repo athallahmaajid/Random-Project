@@ -1,20 +1,21 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
-import os
 from tkinter import messagebox
-from ttkthemes import ThemedTk
 saved = ''
-class App(ThemedTk):
+class App(tk.Tk):
     def __init__(self, *kwargs):
         super().__init__(*kwargs)
-        self['theme'] = 'clam'
+        self.config(bg="#000000")
         self.geometry('750x500')
-        
 #-------Menu Area-------------------------------------------------------------------------------------------------
         self.menu = tk.Menu(self)
+        self.view_menu = tk.Menu(self.menu, tearoff=0)
         self.file_menu = tk.Menu(self.menu, tearoff=0)
 #-------Command Area----------------------------------------------------------------------------------------------
+        self.view_menu.add_command(label="Night Mode", command=self.dark_mode)
+        self.view_menu.add_command(label="Light Mode", command=self.light_mode)
+
         self.file_menu.add_command(label='New File', accelerator='Ctrl+N', command=self.new_file)
         self.file_menu.add_command(label='Open', accelerator='Ctrl+O', command=self.open_file)
         self.file_menu.add_separator()
@@ -25,6 +26,7 @@ class App(ThemedTk):
         self.filename = ''
         self.title('Untitled - Text Editor')
         self.menu.add_cascade(label='File', menu=self.file_menu)
+        self.menu.add_cascade(label='View', menu=self.view_menu)
         self.config(menu=self.menu)
 #-------Bind Area-------------------------------------------------------------------------------------------------
         self.bind('<Control-o>', self.open_file)
@@ -38,6 +40,10 @@ class App(ThemedTk):
         self.text_area.pack(side='left', fill='both', expand=True)
         self.scroll_bar.pack(side='right', fill='y')
 #---Function Area-------------------------------------------------------------------------------------------------
+    def dark_mode(self, *args):
+        self.text_area.config(bg="#373737", fg="white", insertbackground="white")
+    def light_mode(self, *args):
+        self.text_area.config(bg="white", fg="black", insertbackground="black")
     def new_file(self, *args):
         self.text_area.delete('1.0', 'end')
         self.title('Untitled - Text Editor')
@@ -49,7 +55,7 @@ class App(ThemedTk):
                                                                             ('HTML File', '*.html'),
                                                                             ('CSS File', '*.css'),
                                                                             ('Javascript File', '*.js')))
-        
+
         print(self.filename)
         if self.filename in (tuple(), ''):
             pass
